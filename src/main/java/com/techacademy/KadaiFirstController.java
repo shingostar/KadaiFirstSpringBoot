@@ -1,25 +1,23 @@
 package com.techacademy;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.Locale;
+import java.util.Calendar;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-    @RestController
-    public class KadaiFirstController{
+@RestController
+public class KadaiFirstController<DayOfWeek> {
 
-        @GetMapping("YYYYMMDD")
-        public String dispDayOfWeek() {
-        final var localDate = LocalDate.of(0, 0, 0);
-        System.out.println(localDate);
-
-        final var dayOfWeek = LocalDate.getDayOfWeek();
-        System.out.println(dayOfWeek);
-        System.out.println(dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault()));
+    @GetMapping("/dispDayOfWeek/{yyyymmdd}")
+    public String dispDayOfWeek(@PathVariable int yyyy,@PathVariable int mm,@PathVariable int dd) {
+        LocalDate ld = LocalDate.of(yyyy, mm, dd);
+        DayOfWeek w = ld.getDayOfWeek();
+        return w.getDisplayName(TextStyle.LocaleDate.JAPANESE);
+        }
 
     @GetMapping("/plus/{val1}/{val2}")
     public String calcPlus(@PathVariable int val1, @PathVariable int val2) {
